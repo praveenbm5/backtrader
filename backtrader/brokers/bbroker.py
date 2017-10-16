@@ -231,6 +231,7 @@ class BackBroker(bt.BrokerBase):
     params = (
         ('cash', 10000.0),
         ('checksubmit', True),
+        ('checkexecute', True),
         ('eosbar', False),
         ('filler', None),
         # slippage options
@@ -359,6 +360,10 @@ class BackBroker(bt.BrokerBase):
     def set_checksubmit(self, checksubmit):
         '''Sets the checksubmit parameter'''
         self.p.checksubmit = checksubmit
+
+    def set_checkexecute(self, checkexecute):
+        '''Sets the checkexecute parameter'''
+        self.p.checkexecute = checkexecute
 
     def set_eosbar(self, eosbar):
         '''Sets the eosbar parameter (alias: ``seteosbar``'''
@@ -779,7 +784,7 @@ class BackBroker(bt.BrokerBase):
             openedcomm = cinfocomp.getcommission(opened, price)
             cash -= openedcomm
 
-            if cash < 0.0:
+            if cash < 0.0 and self.p.checkexecute:
                 # execution is not possible - nullify
                 opened = 0
                 openedvalue = openedcomm = 0.0
