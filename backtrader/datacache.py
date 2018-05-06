@@ -77,7 +77,7 @@ def CacheSQLite(BaseCache):
 
         else:
             path = os.getenv('XDG_CACHE_HOME', os.path.expanduser('~/.cache'))
-            path os.path.join(path, self.p.appname)
+            path = os.path.join(path, self.p.appname)
 
         path = os.path.join(path, self.p.location,
                             bt.TimeFrame.TName(self.p.timeframe),
